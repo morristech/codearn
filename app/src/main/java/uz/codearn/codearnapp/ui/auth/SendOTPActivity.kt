@@ -194,7 +194,7 @@ class SendOTPActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@SendOTPActivity,
-                        "Successfully saved data!",
+                        "Muvaffaqiyatli ro'yxatdan o'tildi!",
                         Toast.LENGTH_LONG
                     )
                         .show()

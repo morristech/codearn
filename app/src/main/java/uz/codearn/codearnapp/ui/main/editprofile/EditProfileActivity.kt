@@ -9,13 +9,13 @@ import androidx.cardview.widget.CardView
 import androidx.core.view.children
 import androidx.databinding.DataBindingUtil
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import uz.codearn.codearnapp.R
 import uz.codearn.codearnapp.databinding.ActivityEditProfileBinding
 
@@ -33,42 +33,52 @@ class EditProfileActivity : AppCompatActivity() {
 
     private fun initSaveBtn() {
         binding.saveBtn.setOnClickListener {
-            updateUserInfo()
-            finish()
+            updateUserInfoAndFinish()
         }
     }
 
-    private fun updateUserInfo() = CoroutineScope(Dispatchers.IO).launch {
+    private fun updateUserInfoAndFinish() = CoroutineScope(Dispatchers.IO).launch {
         try {
             val map = getUserMap()
             if (map.isNotEmpty()) {
                 Firebase.firestore.collection("users").document(user.uid)
-                    .set(map, SetOptions.merge()).await()
+                    .update(map).await()
+                finish()
             }
         } catch (e: Exception) {
-            Toast.makeText(
-                this@EditProfileActivity,
-                "Iltimos, internetingizni tekshiring!",
-                Toast.LENGTH_LONG
-            ).show()
+            withContext(Dispatchers.Main) {
+                Toast.makeText(
+                    this@EditProfileActivity,
+                    "Iltimos, internetingizni tekshiring!",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
         }
     }
 
-    private fun getUserMap(): Map<String, Any> {
+    private suspend fun getUserMap(): Map<String, Any> {
         var map = mapOf<String, Any>()
         val displayName = binding.userNameInput.text.toString()
         when {
-            displayName.isEmpty() -> Toast.makeText(
-                this,
-                "Iltimos, ismingizni kiriting!",
-                Toast.LENGTH_SHORT
-            ).show()
-            lastSelectedProfile == null -> Toast.makeText(
-                this,
-                "Iltimos, profil rasm tanlang!",
-                Toast.LENGTH_SHORT
-            ).show()
-            else -> {
+            displayName.isEmpty() -> {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@EditProfileActivity,
+                        "Iltimos, ismingizni kiriting!",
+                        Toast.LENGTH_LONG
+                    ).show()
+                }
+            }
+            lastSelectedProfile == null -> {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@EditProfileActivity,
+                        "Iltimos, profil rasmni tanlang!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            displayName.isNotEmpty() && lastSelectedProfile != null -> {
                 map = mapOf<String, Any>(
                     "displayName" to displayName,
                     "profilePhotoIndex" to selectedPicIndex

@@ -96,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
             if (it.isSuccessful) {
                 val phoneNumber = binding.phoneNumberInput.text.toString()
                 val currentUser = Firebase.auth.currentUser
-                currentUser?.let { saveUser(User(currentUser.uid,phoneNumber)) }
+                currentUser?.let { saveUser(User(currentUser.uid, phoneNumber)) }
                 startEditProfileActivity()
             } else {
                 showSnackbar("Internetga ulaning va qayta urinib ko'ring")
@@ -119,7 +119,7 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun startEditProfileActivity(){
+    private fun startEditProfileActivity() {
         val intent = Intent(this, EditProfileActivity::class.java)
         startActivity(intent)
         finish()
@@ -140,7 +140,11 @@ class LoginActivity : AppCompatActivity() {
             currentUser?.let {
                 userCollectionRef.document(currentUser.uid).set(user).await()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(this@LoginActivity, "Successfully saved data!", Toast.LENGTH_LONG)
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Muvaffaqiyatli ro'yxatdan o'tildi!",
+                        Toast.LENGTH_LONG
+                    )
                         .show()
                 }
             }

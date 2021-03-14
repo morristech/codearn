@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import uz.codearn.codearnapp.R
 import uz.codearn.codearnapp.databinding.FragmentProfileBinding
@@ -13,6 +14,7 @@ import uz.codearn.codearnapp.ui.main.editprofile.EditProfileActivity
 
 class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>() {
     private val user = Firebase.auth.currentUser!!
+    private lateinit var userUid: String
 
     override fun getLayoutId() = R.layout.fragment_profile
     override fun getViewModelClass() = ProfileViewModel::class.java
@@ -21,6 +23,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         super.onActivityCreated(savedInstanceState)
         binding.viewModel = viewModel
         binding.lifecycleOwner = this
+        userUid = user.uid
 
         initEditButton()
         initTelegramChannelButton()
@@ -44,12 +47,18 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
         binding.deleteProfileBtn.setOnClickListener {
             user.delete().addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    deleteUserDataFromFirestore()
                     val intent = Intent(activity, LoginActivity::class.java)
                     startActivity(intent)
                     requireActivity().finish()
                 }
             }
         }
+    }
+
+    private fun deleteUserDataFromFirestore() {
+        val userDoc = Firebase.firestore.collection("users").document(userUid)
+        userDoc.delete()
     }
 
     private fun initSignOutButton() {

@@ -11,7 +11,6 @@ import com.github.mikephil.charting.data.PieDataSet
 import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -66,7 +65,7 @@ class FinishTestActivity : AppCompatActivity() {
             binding.earnedScore.text = earnedScore.toString()
             val oldData = userDoc.get().await()
             val user = oldData.toObject<User>()!!
-            userDoc.set(mapOf("score" to (user.score + earnedScore)), SetOptions.merge()).await()
+            userDoc.update(mapOf("score" to (user.score + earnedScore))).await()
         }
 
     private fun initCongratulationsText(correctAnswers: Int) {

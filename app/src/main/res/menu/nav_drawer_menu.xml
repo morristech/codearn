@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/pages"
+        android:title="@string/sahifalar">
+        <menu>
+            <group
+                android:id="@+id/group1"
+                android:checkableBehavior="single">
+                <item
+                    android:id="@+id/fragmentHome"
+                    android:checked="true"
+                    android:icon="@drawable/ic_home"
+                    android:title="@string/bosh_sahifa" />
+                <item
+                    android:id="@+id/fragmentLeaderboard"
+                    android:icon="@drawable/ic_leaderboard"
+                    android:title="@string/yetakchilar" />
+                <item
+                    android:id="@+id/fragmentProfile"
+                    android:icon="@drawable/ic_profile"
+                    android:title="@string/profil" />
+            </group>
+        </menu>
+    </item>
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/fragmentInfo"
+            android:icon="@drawable/ic_info"
+            android:title="@string/ilova_haqida" />
+    </group>
+</menu>

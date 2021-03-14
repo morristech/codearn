@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#121212"
+        tools:context=".ui.main.test.TestActivity">
+
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/test_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#121212"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="16dp"
+                tools:context=".ui.main.test.TestActivity">
+
+                <LinearLayout
+                    android:id="@+id/progress_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:background="#14FFFFFF"
+                    android:orientation="horizontal"
+                    android:weightSum="10"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+
+                    <View style="@style/indicator_child_item_view_style" />
+                </LinearLayout>
+
+                <ScrollView
+                    android:id="@+id/question_text_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHeight_percent=".45"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/progress_indicator">
+
+                    <TextView
+                        android:id="@+id/question_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textColor="@color/white_60_alpha"
+                        android:textSize="20sp"
+                        tools:text="Python yordamida biz qanday dasturlar tuzishimiz mumkin?" />
+                </ScrollView>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/options_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/question_text_container"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/option_item_view" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/next_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/next"
+            android:src="@drawable/ic_next"
+            android:textColor="@color/white"
+            app:backgroundTint="@drawable/next_fab_color"
+            app:layout_anchor="@+id/scrollView2"
+            app:layout_anchorGravity="end|bottom"
+            app:tint="@color/white" />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "570813440698",
+    "project_id": "codearn-app",
+    "storage_bucket": "codearn-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:570813440698:android:32ce4504d636683af59883",
+        "android_client_info": {
+          "package_name": "uz.codearn.codearnapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "570813440698-f72q8h5q7s92kjas4huvdse99heu4jpn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "uz.codearn.codearnapp",
+            "certificate_hash": "ebf5d892996e0f50b07839d5510ef446d0ddf1bb"
+          }
+        },
+        {
+          "client_id": "570813440698-p7ie927s1i9ik83hsvqgtlk8lma467fa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAA-U_WtG6KhLIkAZVAyIUSurlRuePlNsU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "570813440698-p7ie927s1i9ik83hsvqgtlk8lma467fa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

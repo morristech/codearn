@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#335C7D">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:text="@string/enter_your_name"
+                android:textColor="@color/white_60_alpha"
+                android:textSize="18sp" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="16dp"
+                app:cardBackgroundColor="#273c75"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="0dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:layout_width="56dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/black"
+                        android:contentDescription="@string/phone"
+                        android:padding="15dp"
+                        android:src="@drawable/ic_person"
+                        app:tint="@color/white_60_alpha" />
+
+                    <EditText
+                        android:id="@+id/user_name_input"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:hint="@string/name"
+                        android:importantForAutofill="no"
+                        android:inputType="textPersonName"
+                        android:paddingHorizontal="16dp"
+                        android:textColor="@color/white"
+                        android:textColorHint="@color/white_60_alpha" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/choose_profile_pic"
+                android:textColor="@color/white_60_alpha"
+                android:textSize="18sp" />
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <GridLayout
+                    android:id="@+id/profile_pic_gridlayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    android:columnCount="5"
+                    android:paddingEnd="16dp"
+                    android:paddingBottom="16dp"
+                    tools:ignore="ContentDescription,RtlSymmetry">
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/man1" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/man2" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/man3" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/man4" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/man5" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/woman1" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/woman2" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/woman3" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/woman4" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        style="@style/profile_pic_select_style"
+                        android:onClick="onProfilePicClicked"
+                        app:cardCornerRadius="4dp"
+                        app:cardElevation="7dp">
+
+                        <ImageView
+                            style="@style/profile_pic__select_image_style"
+                            android:src="@drawable/woman5" />
+                    </androidx.cardview.widget.CardView>
+                </GridLayout>
+            </HorizontalScrollView>
+
+            <TextView
+                android:id="@+id/save_btn"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_margin="16dp"
+                android:background="#00ACEE"
+                android:fontFamily="@font/roboto"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </ScrollView>
+</layout>

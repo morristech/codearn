@@ -6,7 +6,7 @@ With this app you can learn programming anywhere anytime. App teaches more than 
 
 Built with MVVM architecture. Used Cloud Firestore to save and retrieve data. 
 
-| ![Screenshot 1](screenshot1.jpg) | ![Screenshot 2](screenshot2.jpg) | ![Screenshot 3](screenshot3.jpg) | ![Screenshot 4](screenshots/screenshot4.jpg) | ![Screenshot 5](screenshots/screenshot5.jpg) | ![Screenshot 6](screenshots/screenshot6.jpg)
+| ![Screenshot 1](screenshot1.jpg) | ![Screenshot 2](screenshot2.jpg) | ![Screenshot 3](screenshot3.jpg) | ![Screenshot 4](screenshot4.jpg) | ![Screenshot 5](screenshot5.jpg) | ![Screenshot 6](screenshot6.jpg)
 | --------------------------- | ------------------------- | ------------------------- | ------------------------- | ------------------------- | ------------------------- |
 
 ---------------------

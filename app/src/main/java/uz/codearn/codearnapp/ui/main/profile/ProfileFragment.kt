@@ -1,11 +1,16 @@
 package uz.codearn.codearnapp.ui.main.profile
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import uz.codearn.codearnapp.R
 import uz.codearn.codearnapp.databinding.FragmentProfileBinding
 import uz.codearn.codearnapp.ui.auth.LoginActivity
@@ -45,28 +50,44 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding, ProfileViewModel>()
 
     private fun initDeleteProfileBtn() {
         binding.deleteProfileBtn.setOnClickListener {
-            user.delete().addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    deleteUserDataFromFirestore()
-                    val intent = Intent(activity, LoginActivity::class.java)
-                    startActivity(intent)
-                    requireActivity().finish()
+            AlertDialog.Builder(context)
+                .setTitle("Chiqish")
+                .setMessage("Hisobingizni o'chirishni xohlaysizmi?")
+                .setPositiveButton("Ha") { _, _ ->
+                    user.delete().addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            deleteUserDataFromFirestore()
+                            val intent = Intent(activity, LoginActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
+                        }
+                    }
                 }
-            }
+                .setNegativeButton("Yo'q", null)
+                .show()
         }
     }
 
-    private fun deleteUserDataFromFirestore() {
+    private fun deleteUserDataFromFirestore() = CoroutineScope(Dispatchers.IO).launch {
         val userDoc = Firebase.firestore.collection("users").document(userUid)
-        userDoc.delete()
+        userDoc.delete().await()
     }
 
     private fun initSignOutButton() {
         binding.signOutBtnProfile.setOnClickListener {
-            Firebase.auth.signOut()
-            val intent = Intent(activity, LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            binding.deleteProfileBtn.setOnClickListener {
+                AlertDialog.Builder(context)
+                    .setTitle("Chiqish")
+                    .setMessage("Hisobingizni o'chirishni xohlaysizmi?")
+                    .setPositiveButton("Ha") { _, _ ->
+                        Firebase.auth.signOut()
+                        val intent = Intent(activity, LoginActivity::class.java)
+                        startActivity(intent)
+                        requireActivity().finish()
+                    }
+                    .setNegativeButton("Yo'q", null)
+                    .show()
+            }
         }
     }
 

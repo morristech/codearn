@@ -6,6 +6,9 @@ With this app you can learn programming anywhere anytime. App teaches more than 
 
 Built with MVVM architecture. Used Cloud Firestore to save and retrieve data. 
 
+| ![Screenshot 1](screenshot1.png) | ![Screenshot 2](screenshot2.png) | ![Screenshot 3](screenshot3.png) | ![Screenshot 4](screenshots/screenshot4.png) | ![Screenshot 5](screenshots/screenshot5.png) | ![Screenshot 6](screenshots/screenshot6.png)
+| --------------------------- | ------------------------- | ------------------------- | ------------------------- | ------------------------- | ------------------------- |
+
 ---------------------
 
 *Currently, app supports only Uzbek language.*

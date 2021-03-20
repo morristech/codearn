@@ -3,15 +3,22 @@
     package="uz.codearn.codearnapp">
 
     <application
+        android:name=".CodearnApplication"
+        android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Codearn">
-        <activity android:name="uz.codearn.codearnapp.ui.main.finishtest.FinishTestActivity"></activity>
-        <activity android:name=".ui.main.editprofile.EditProfileActivity" />
-        <activity android:name=".ui.main.editprofile.EditProfileFragment" />
-        <activity android:name=".ui.main.test.TestActivity" />
+        <activity
+            android:name="uz.codearn.codearnapp.ui.main.finishtest.FinishTestActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.main.editprofile.EditProfileActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.main.test.TestActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.auth.SendOTPActivity"
             android:screenOrientation="portrait"

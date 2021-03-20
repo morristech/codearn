@@ -170,6 +170,11 @@ class SendOTPActivity : AppCompatActivity() {
         finish()
     }
 
+    override fun onStop() {
+        super.onStop()
+        timer.cancel()
+    }
+
     private fun startEditProfileActivity() {
         val intent = Intent(this, EditProfileActivity::class.java)
         startActivity(intent)
@@ -188,9 +193,9 @@ class SendOTPActivity : AppCompatActivity() {
 
     private fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
         try {
-            val currentUser = Firebase.auth.currentUser
-            currentUser?.let {
-                userCollectionRef.document(currentUser.uid).set(user).await()
+            val userQuery = userCollectionRef.whereEqualTo("userId", user.userId).get().await()
+            if (userQuery.documents.isEmpty()) {
+                userCollectionRef.add(user).await()
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@SendOTPActivity,
@@ -199,6 +204,8 @@ class SendOTPActivity : AppCompatActivity() {
                     )
                         .show()
                 }
+            } else {
+                startMainActivity()
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {

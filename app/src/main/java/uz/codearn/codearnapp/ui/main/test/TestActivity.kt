@@ -12,14 +12,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
-import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
 import uz.codearn.codearnapp.R
 import uz.codearn.codearnapp.databinding.ActivityTestBinding
 import uz.codearn.codearnapp.model.Question
@@ -29,7 +23,7 @@ class TestActivity : AppCompatActivity() {
     private lateinit var binding: ActivityTestBinding
     private val viewModel: TestViewModel by lazy {
         val selectedProgrammingLanguage = intent.getStringExtra("PROGRAMMING_LANG")!!
-        val viewModelFactory = TestViewModelFactory(selectedProgrammingLanguage)
+        val viewModelFactory = TestViewModelFactory(selectedProgrammingLanguage, application)
         ViewModelProvider(this, viewModelFactory).get(TestViewModel::class.java)
     }
     private val programmingLang: String by lazy {
@@ -51,8 +45,10 @@ class TestActivity : AppCompatActivity() {
 
         viewModel.questions.observe(this, { questionList ->
             questionList?.let {
-                allQuestions = questionList
-                setUpQuestion()
+                if (questionList.isNotEmpty()) {
+                    allQuestions = it.shuffled()
+                    setUpQuestion()
+                }
             }
         })
 
@@ -75,7 +71,6 @@ class TestActivity : AppCompatActivity() {
                 binding.progressIndicator.getChildAt(currentQuestionInd).apply {
                     setBackgroundColor(Color.parseColor("#00ACEE"))
                 }
-                updateSolvedTimes(currentQuestion.questionText)
                 optionsClickable = false
                 if (currentQuestion.correctAnswer == position) {
                     correctAnswers++
@@ -94,15 +89,6 @@ class TestActivity : AppCompatActivity() {
                     wrongSelectedOptionView?.setBackgroundColor(Color.parseColor("#14F44336"))
                 }
             }
-        }
-    }
-
-    private fun updateSolvedTimes(questionTxt: String) = CoroutineScope(Dispatchers.IO).launch {
-        val querySnapshot = questionsRef.whereEqualTo("questionText", questionTxt).get().await()
-        for (documentSnapshot in querySnapshot) {
-            val question = documentSnapshot.toObject<Question>()
-            val map = mapOf("solvedTimes" to (question.solvedTimes + 1))
-            questionsRef.document(documentSnapshot.id).set(map, SetOptions.merge())
         }
     }
 

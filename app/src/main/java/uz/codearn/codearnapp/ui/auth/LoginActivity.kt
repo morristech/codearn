@@ -136,9 +136,9 @@ class LoginActivity : AppCompatActivity() {
 
     private fun saveUser(user: User) = CoroutineScope(Dispatchers.IO).launch {
         try {
-            val currentUser = Firebase.auth.currentUser
-            currentUser?.let {
-                userCollectionRef.document(currentUser.uid).set(user).await()
+            val userQuery = userCollectionRef.whereEqualTo("userId", user.userId).get().await()
+            if (userQuery.documents.isEmpty()) {
+                userCollectionRef.add(user).await()
                 withContext(Dispatchers.Main) {
                     Toast.makeText(
                         this@LoginActivity,
@@ -147,6 +147,8 @@ class LoginActivity : AppCompatActivity() {
                     )
                         .show()
                 }
+            } else {
+                startMainActivity()
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {

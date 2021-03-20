@@ -1,36 +1,51 @@
 package uz.codearn.codearnapp.ui.main.home
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import android.app.Application
+import android.content.Context
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
+import uz.codearn.codearnapp.constants.Constants
+import uz.codearn.codearnapp.db.codingpath.getCodingPathsDatabase
 import uz.codearn.codearnapp.repositories.CodingPathRepository
-import uz.codearn.codearnapp.model.CodingPath
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(app: Application) : AndroidViewModel(app) {
 
     private val codingPathsRef = Firebase.firestore.collection("codingPaths")
-    private val repository = CodingPathRepository(codingPathsRef, this)
-
-    private val _codingPaths = MutableLiveData<List<CodingPath>>()
-    val codingPaths: LiveData<List<CodingPath>>
-        get() = _codingPaths
-
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean>
-        get() = _isLoading
+    private val codingPathsDatabase = getCodingPathsDatabase(app.applicationContext)
+    private val repository = CodingPathRepository(codingPathsDatabase, codingPathsRef)
+    private val sharedPreferences =
+        app.getSharedPreferences(Constants.refreshDataCounter, Context.MODE_PRIVATE)
 
     init {
         viewModelScope.launch {
-            _codingPaths.value = repository.getAllCodingPaths()
+            var refreshCodingPathsCount =
+                sharedPreferences.getInt(Constants.refreshCodingPathsCount, 0)
+            val editor = sharedPreferences.edit()
+            if (refreshCodingPathsCount !in 1..1000) {
+                repository.refreshCodingPaths()
+                editor.putInt(Constants.refreshCodingPathsCount, 1)
+            } else {
+                refreshCodingPathsCount++
+                editor.putInt(Constants.refreshCodingPathsCount, refreshCodingPathsCount)
+            }
+            editor.apply()
         }
     }
 
-    fun setLoading(isLoading: Boolean) {
-        _isLoading.value = isLoading
-    }
+    val codingPaths = repository.codingPaths
+}
 
+class HomeViewModelFactory(private val app: Application) : ViewModelProvider.Factory {
+    @Suppress("UNCHECKED_CAST")
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            return HomeViewModel(app) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
+    }
 }

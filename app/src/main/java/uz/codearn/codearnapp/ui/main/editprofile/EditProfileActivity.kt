@@ -24,6 +24,7 @@ class EditProfileActivity : AppCompatActivity() {
     private var lastSelectedProfile: CardView? = null
     private var selectedPicIndex = 0
     private var user = Firebase.auth.currentUser!!
+    private var usersRef = Firebase.firestore.collection("users")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,9 +42,20 @@ class EditProfileActivity : AppCompatActivity() {
         try {
             val map = getUserMap()
             if (map.isNotEmpty()) {
-                Firebase.firestore.collection("users").document(user.uid)
-                    .update(map).await()
-                finish()
+                val userQuery = usersRef.whereEqualTo("userId", user.uid).get().await()
+                try {
+                    if (userQuery.documents.isNotEmpty()) {
+                        for (doc in userQuery) {
+                            usersRef.document(doc.id).update(map).await()
+                        }
+                    }
+                    finish()
+                } catch (e: Exception) {
+                    withContext(Dispatchers.Main) {
+                        Toast.makeText(this@EditProfileActivity, e.message, Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
             }
         } catch (e: Exception) {
             withContext(Dispatchers.Main) {

@@ -4,25 +4,33 @@ import android.util.Log
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.Query.Direction.ASCENDING
 import com.google.firebase.firestore.ktx.toObject
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
+import uz.codearn.codearnapp.db.asQuestionDatabaseModel
+import uz.codearn.codearnapp.db.question.QuestionsDatabase
 import uz.codearn.codearnapp.model.Question
-import java.lang.Exception
 
-class QuestionsRepository(private val questionsRef:CollectionReference) {
+class QuestionsRepository(
+    private val database: QuestionsDatabase,
+    private val questionsRef: CollectionReference
+) {
 
-    suspend fun getQuestionsByProgrammingLang(programmingLang:String):List<Question>{
-        val questionsList = mutableListOf<Question>()
+    suspend fun refreshQuestions() {
         try {
-            val querySnapshot = questionsRef.orderBy("solvedTimes", ASCENDING).whereEqualTo("programmingLanguage",programmingLang).limit(10).get().await()
-            for (document in querySnapshot){
-                document.toObject<Question>().let {
-                    questionsList.add(it)
+            withContext(Dispatchers.IO) {
+                val querySnapshot = questionsRef.orderBy("addedDate", ASCENDING).get().await()
+                val listQuestions = arrayListOf<Question>()
+                for (document in querySnapshot) {
+                    document.toObject<Question>().let {
+                        listQuestions.add(it)
+                    }
                 }
+                database.questionDao.insertQuestions(*listQuestions.asQuestionDatabaseModel())
             }
         }catch (e:Exception){
-            Log.d("QuestionsRepository", "getQuestionsByProgrammingLang: ${e.message}")
+            Log.e("QuestionsRepository", "getQuestionsByProgrammingLang: ${e.message}")
         }
-        return questionsList
     }
 
 }

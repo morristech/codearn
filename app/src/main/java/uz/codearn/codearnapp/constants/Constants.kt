@@ -1,8 +1,13 @@
-package uz.codearn.codearnapp.objects
+package uz.codearn.codearnapp.constants
 
 import uz.codearn.codearnapp.R
 
-object Images {
+
+object Constants {
+
+    const val refreshDataCounter = "REFRESH_DATA_COUNTER"
+    const val refreshQuestionsCount = "REFRESH_QUESTIONS_COUNT"
+    const val refreshCodingPathsCount = "REFRESH_CODING_PATHS_COUNT"
 
     fun getAllProfilePics() = arrayListOf(
         R.drawable.man1,

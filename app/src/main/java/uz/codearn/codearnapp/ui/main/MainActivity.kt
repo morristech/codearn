@@ -21,9 +21,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import uz.codearn.codearnapp.R
+import uz.codearn.codearnapp.constants.Constants
 import uz.codearn.codearnapp.databinding.ActivityMainBinding
 import uz.codearn.codearnapp.model.User
-import uz.codearn.codearnapp.objects.Images
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -83,13 +83,15 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavViewHeader() = CoroutineScope(Dispatchers.IO).launch {
         try {
             firebaseCurrentUser?.let {
-                val snapshot = userCollectionRef.document(it.uid).get().await()
+                val snapshot =
+                    userCollectionRef.whereEqualTo("userId", firebaseCurrentUser.uid).get()
+                        .await().documents[0]
                 val user = snapshot?.toObject(User::class.java)
                 val navDrawerHeader = binding.navView.getHeaderView(0)
                 user?.let {
                     withContext(Dispatchers.Main) {
                         navDrawerHeader.findViewById<ImageView>(R.id.user_profile_pic_header)
-                            .setImageResource(Images.getAllProfilePics()[user.profilePhotoIndex])
+                            .setImageResource(Constants.getAllProfilePics()[user.profilePhotoIndex])
                         navDrawerHeader.findViewById<TextView>(R.id.user_name_header).text =
                             user.displayName
                         navDrawerHeader.findViewById<TextView>(R.id.user_score_header).text =

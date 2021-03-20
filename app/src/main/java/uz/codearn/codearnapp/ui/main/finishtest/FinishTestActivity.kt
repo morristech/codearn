@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.github.mikephil.charting.data.PieData
@@ -18,6 +19,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import uz.codearn.codearnapp.R
 import uz.codearn.codearnapp.databinding.ActivityFinishTestBinding
 import uz.codearn.codearnapp.model.User
@@ -27,7 +29,7 @@ import kotlin.math.absoluteValue
 class FinishTestActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFinishTestBinding
     private val user = Firebase.auth.currentUser!!
-    private val userDoc = Firebase.firestore.collection("users").document(user.uid)
+    private val usersRef = Firebase.firestore.collection("users")
     private lateinit var programmingLang: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,11 +63,18 @@ class FinishTestActivity : AppCompatActivity() {
 
     private fun initEarnedScoreUpdateScore(correctAnswers: Int) =
         CoroutineScope(Dispatchers.IO).launch {
-            val earnedScore = correctAnswers * 10
-            binding.earnedScore.text = earnedScore.toString()
-            val oldData = userDoc.get().await()
-            val user = oldData.toObject<User>()!!
-            userDoc.update(mapOf("score" to (user.score + earnedScore))).await()
+            try {
+                val earnedScore = correctAnswers * 10
+                binding.earnedScore.text = earnedScore.toString()
+                val oldData = usersRef.whereEqualTo("userId", user.uid).get().await().documents[0]
+                val user = oldData.toObject<User>()!!
+                usersRef.document(oldData.id).update(mapOf("score" to (user.score + earnedScore)))
+                    .await()
+            } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(this@FinishTestActivity, e.message, Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
     private fun initCongratulationsText(correctAnswers: Int) {

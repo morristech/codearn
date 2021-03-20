@@ -2,15 +2,14 @@ package uz.codearn.codearnapp.bindingadapters
 
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.cardview.widget.CardView
 import androidx.core.net.toUri
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import uz.codearn.codearnapp.R
+import uz.codearn.codearnapp.constants.Constants
 import uz.codearn.codearnapp.model.CodingPath
 import uz.codearn.codearnapp.model.User
-import uz.codearn.codearnapp.objects.Images
 import uz.codearn.codearnapp.ui.main.home.CodingPathsAdapter
 import uz.codearn.codearnapp.ui.main.leaderboard.TopUsersAdapter
 
@@ -26,13 +25,6 @@ fun bindTopUsersListData(recyclerView: RecyclerView, listData: List<User>?) {
     adapter.submitList(listData)
 }
 
-@BindingAdapter("android:available")
-fun codingPathAvailability(cardView: CardView, isAvailable: Boolean?) {
-    if (isAvailable != null) {
-        cardView.alpha = if (isAvailable) 1.0f else 0.5f
-    }
-}
-
 @BindingAdapter("imgUrl")
 fun setCodingPathImage(imageView: ImageView,url:String?){
     url?.let {
@@ -44,7 +36,7 @@ fun setCodingPathImage(imageView: ImageView,url:String?){
 @BindingAdapter("android:profilePhotoIndex")
 fun setUserProfilePic(imageView: ImageView,profileIndex:Int?){
     profileIndex?.let {
-        imageView.setImageResource(Images.getAllProfilePics()[profileIndex])
+        imageView.setImageResource(Constants.getAllProfilePics()[profileIndex])
     }
 }
 

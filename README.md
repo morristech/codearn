@@ -10,6 +10,7 @@ Used:
 - Cloud Firestore to save and retrieve data.
 - Kotlin coroutines to write asynchronous, non-blocking code.
 - Room
+- Data binding
 - Picasso library
 - WorkManager
 

@@ -2,21 +2,23 @@
 
 ### Learn programming with us!
 
-With this app you can learn programming anywhere anytime. App teaches more than five programming language. It also have Leaderboard, which shows top 20 user. It helps to build competetion among users.
+Codearn is an app to learn programming anywhere, anytime. It also has Leaderboard, which shows the top 20 users. It helps to build competition among users.
 
-Built with MVVM architecture.
+Technologies used:
+<p>
+  <a href="#"><img src="https://img.shields.io/badge/Kotlin--_.svg?style=flat-square&logo=kotlin" alt="Kotlin"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Cloud-Firestore-_.svg?style=flat-square&logo=firebase" alt="Cloud Firestore"></a>
+  <a href="#"><img src="https://img.shields.io/badge/MVVM-Architecture-_.svg?style=flat-square" alt="MVVM Architecture"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Data-Binding-_.svg?style=flat-square" alt="View Binding"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Room--_.svg?style=flat-square" alt="Room"></a>
+  <a href="#"><img src="https://img.shields.io/badge/Picasso-Library-_.svg?style=flat-square" alt="Picasso Library"></a>
+  <a href="#"><img src="https://img.shields.io/badge/WorkManager--_.svg?style=flat-square" alt="WorkManager"></a>
+</p>
 
-Used:
-- Cloud Firestore to save and retrieve data.
-- Kotlin coroutines to write asynchronous, non-blocking code.
-- Room
-- Data binding
-- Picasso library
-- WorkManager
+### Screenshots
 
-| ![Screenshot 1](screenshots/screenshot1.jpg) | ![Screenshot 2](screenshots/screenshot2.jpg) | ![Screenshot 3](screenshots/screenshot3.jpg) | ![Screenshot 4](screenshots/screenshot4.jpg) | ![Screenshot 5](screenshots/screenshot5.jpg) | ![Screenshot 6](screenshots/screenshot6.jpg)
-| --------------------------- | ------------------------- | ------------------------- | ------------------------- | ------------------------- | ------------------------- |
-
----------------------
+| ![Screenshot 1](screenshots/screenshot1.jpg) | ![Screenshot 2](screenshots/screenshot2.jpg) | ![Screenshot 3](screenshots/screenshot3.jpg) |
+| --- | --- | --- |
+| ![Screenshot 4](screenshots/screenshot4.jpg) | ![Screenshot 5](screenshots/screenshot5.jpg) | ![Screenshot 6](screenshots/screenshot6.jpg) |
 
 *Currently, app supports only Uzbek language.*

@@ -15,6 +15,8 @@ Technologies used:
   <a href="#"><img src="https://img.shields.io/badge/WorkManager--_.svg?style=flat-square" alt="WorkManager"></a>
 </p>
 
+<a href='https://play.google.com/store/apps/details?id=uz.codearn.codearnapp&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png' width='200'/></a>
+
 ### Screenshots
 
 | ![Screenshot 1](screenshots/screenshot1.jpg) | ![Screenshot 2](screenshots/screenshot2.jpg) | ![Screenshot 3](screenshots/screenshot3.jpg) |
